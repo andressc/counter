@@ -1,0 +1,26 @@
+input {
+    width: 100px;
+    padding: 9px;
+    font-size: 23px;
+    color: rgb(255, 79, 106);
+    border: 1px solid rgb(255, 79, 106);
+}
+
+span {
+    color: rgb(255, 79, 106);
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
