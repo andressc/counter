@@ -2,38 +2,42 @@ import React, {JSX, useEffect, useState} from "react"
 import "./App.css"
 import {EditCounter} from "./components/EditCounter/EditCounter"
 import {Counter} from "./components/Counter/Counter"
+import {
+    COUNTER_STORAGE_KEY,
+    DEFAULT_START_COUNTER,
+    DEFAULT_STOP_COUNTER,
+    START_COUNTER_STORAGE_KEY,
+    STOP_COUNTER_STORAGE_KEY
+} from "./constants"
 
 type localStorageKeyType = "startCounter" | "counter" | "stopCounter"
 
+const createInitialState = (keyType: localStorageKeyType, defaultValue: number): number =>
+    localStorage.getItem(keyType) == null ? defaultValue : (JSON.parse(localStorage.getItem(keyType)!))
+
 function App() {
 
-    const defaultStartCounter = 0
-    const defaultStopCounter = 5
-
-    const initialState = (teyType: localStorageKeyType, defaultValue: number): number =>
-        localStorage.getItem(teyType) == null ? defaultValue : (JSON.parse(localStorage.getItem(teyType)!))
-
     const [startCounter, setStartCounter] = useState<number>(
-        initialState("startCounter", defaultStartCounter)
+        createInitialState(START_COUNTER_STORAGE_KEY, DEFAULT_START_COUNTER)
     )
 
     const [stopCounter, setStopCounter] = useState<number>(
-        initialState("stopCounter", defaultStopCounter)
+        createInitialState(STOP_COUNTER_STORAGE_KEY, DEFAULT_STOP_COUNTER)
     )
 
     const [counter, setCounter] = useState<number>(
-        initialState("counter", defaultStartCounter)
+        createInitialState(COUNTER_STORAGE_KEY, DEFAULT_START_COUNTER)
     )
 
     const [editMode, setEditMode] = useState<boolean>(false)
 
     useEffect(() => {
-        localStorage.setItem("counter", JSON.stringify(counter))
+        localStorage.setItem(COUNTER_STORAGE_KEY, JSON.stringify(counter))
     }, [counter])
 
     useEffect(() => {
-        localStorage.setItem("startCounter", JSON.stringify(startCounter))
-        localStorage.setItem("stopCounter", JSON.stringify(stopCounter))
+        localStorage.setItem(START_COUNTER_STORAGE_KEY, JSON.stringify(startCounter))
+        localStorage.setItem(STOP_COUNTER_STORAGE_KEY, JSON.stringify(stopCounter))
     }, [startCounter, stopCounter])
 
 
@@ -43,16 +47,17 @@ function App() {
 
     const editCounter = () => setEditMode(true)
 
-    const closeEditMode = () => setEditMode(false)
+    const isEditMode = () => setEditMode(false)
 
 
     const isEdit: JSX.Element = editMode
         ? <EditCounter setStartCounter={setStartCounter}
                        setStopCounter={setStopCounter}
-                       closeEditMode={closeEditMode}
+                       isEditMode={isEditMode}
                        setCounter={setCounter}
                        startCounter={startCounter}
                        stopCounter={stopCounter}
+                       counter={counter}
         />
         : <Counter startCounter={startCounter}
                    stopCounter={stopCounter}
