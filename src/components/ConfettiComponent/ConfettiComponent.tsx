@@ -7,16 +7,20 @@ import firecracker from '../../assets/sounds/firecracker.mp3';
 type PropsType = {
     value: number
     stopCounter: number
+    isConfetti: boolean
+    confettiIsWorked: () => void
 }
 
-export const ConfettiComponent: React.FC<PropsType> = ({value, stopCounter}) => {
+export const ConfettiComponent: React.FC<PropsType> = ({value, stopCounter, isConfetti, confettiIsWorked}) => {
     const [isConfettiActive, setConfettiActive] = useState(false)
 
     const [playFirecracker] = useSound(firecracker, {volume: 0.1});
     const [playApplause] = useSound(applause, {volume: 0.1});
 
     useEffect(() => {
-        if (value === stopCounter) {
+        if (value === stopCounter && !isConfetti) {
+
+            confettiIsWorked()
 
             playFirecracker()
             playApplause()
