@@ -6,11 +6,16 @@
     cursor: pointer;
     background-color: rgb(255, 79, 106);
     color: #fff;
-    transition: .5s;
+    transition: .1s;
 }
 
 .button:hover {
     background-color: rgb(255, 27, 60);
+}
+
+.button:active {
+
+    transform: scale(0.96);
 }
 
 .buttonDisabled {

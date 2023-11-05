@@ -4,10 +4,9 @@
     color: #ff5a37;
     transition: 0.2s;
     user-select: none;
-    cursor: pointer;
 }
 
-.counterRed {
+.counterStop {
     color: #fa3141;
     transform: scale(1.3);
 }

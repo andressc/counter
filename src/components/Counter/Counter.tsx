@@ -28,7 +28,6 @@ export const Counter: React.FC<PropsType> = ({
         <>
             <CounterNumber value={counter}
                            stopCounter={stopCounter}
-                           callBack={incCounter}
                            isConfetti={isConfetti}
                            confettiIsWorked={confettiIsWorked}
             />
