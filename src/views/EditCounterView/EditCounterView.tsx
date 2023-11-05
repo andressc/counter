@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from "react"
-import {Button} from "../Button/Button"
-import {Input} from "../Input/Input"
-import styles from "./EditCounter.module.css"
+import {Button} from "../../components/Button/Button"
+import {Input} from "../../components/Input/Input"
+import styles from "./EditCounterView.module.css"
 import useSound from "use-sound"
 import errorSound from "../../assets/sounds/error.mp3"
 import {SoundContext} from "../../contexts/SoundContext"
-import {ErrorMessage} from "../ErrorMessage/ErrorMessage"
+import {ErrorMessage} from "../../components/ErrorMessage/ErrorMessage"
 
 type PropsType = {
     setStartCounter: (value: number) => void
@@ -17,7 +17,7 @@ type PropsType = {
     stopCounter: number
 }
 
-export const EditCounter: React.FC<PropsType> = ({
+export const EditCounterView: React.FC<PropsType> = ({
                                                      setStartCounter,
                                                      setStopCounter,
                                                      confettiIsDontWorked,

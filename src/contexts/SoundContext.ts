@@ -1,5 +1,5 @@
 import {createContext} from "react"
-import {DEFAULT_IS_SOUND, DEFAULT_SOUND_VOLUME} from "../constants"
+import {DEFAULT_IS_SOUND, DEFAULT_SOUND_VOLUME} from "../constants/constants"
 
 type SoundContextType = {
     volume: number

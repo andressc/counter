@@ -1,18 +1,17 @@
 import React, {JSX, useEffect, useState} from "react"
 import "./App.css"
-import {EditCounter} from "./components/EditCounter/EditCounter"
-import {Counter} from "./components/Counter/Counter"
+import {EditCounterView} from "./views/EditCounterView/EditCounterView"
+import {CounterView} from "./views/CounterView/CounterView"
 import {
     COUNTER_STORAGE_KEY, DEFAULT_IS_CONFETTI, DEFAULT_IS_SOUND, DEFAULT_SOUND_VOLUME,
     DEFAULT_START_COUNTER,
     DEFAULT_STOP_COUNTER, IS_CONFETTI_STORAGE_KEY,
     START_COUNTER_STORAGE_KEY,
     STOP_COUNTER_STORAGE_KEY,
-} from "./constants"
+} from "./constants/constants"
 import {IsSound} from "./components/IsSound/IsSound"
 import {SoundContext} from "./contexts/SoundContext"
-import {Button} from "./components/Button/Button"
-import {Text} from "./components/Text/Text"
+import {SoundView} from "./views/SoundView/SoundView"
 
 type localStorageKeyType =
     typeof START_COUNTER_STORAGE_KEY
@@ -91,31 +90,28 @@ function App() {
 
     const isEditMode = () => setEditMode(false)
 
-    const selectSound: JSX.Element = <div className="App">
-        <Text text="Turn on the sound?"/>
-        <div className="buttonWrapper">
-            <Button title="yes" callBack={soundDialogYes}/>
-            <Button title="no" callBack={soundDialogNo}/>
-        </div>
-    </div>
+    const selectSound: JSX.Element = <SoundView
+        soundDialogNo={soundDialogNo}
+        soundDialogYes={soundDialogYes}
+    />
 
     const isEdit: JSX.Element = editMode
-        ? <EditCounter setStartCounter={setStartCounter}
-                       setStopCounter={setStopCounter}
-                       isEditMode={isEditMode}
-                       setCounter={setCounter}
-                       confettiIsDontWorked={confettiIsDontWorked}
-                       startCounter={startCounter}
-                       stopCounter={stopCounter}
+        ? <EditCounterView setStartCounter={setStartCounter}
+                           setStopCounter={setStopCounter}
+                           isEditMode={isEditMode}
+                           setCounter={setCounter}
+                           confettiIsDontWorked={confettiIsDontWorked}
+                           startCounter={startCounter}
+                           stopCounter={stopCounter}
         />
-        : <Counter startCounter={startCounter}
-                   stopCounter={stopCounter}
-                   counter={counter}
-                   editCounter={editCounter}
-                   incCounter={incCounter}
-                   resetCounter={resetCounter}
-                   isConfetti={isConfetti}
-                   confettiIsWorked={confettiIsWorked}
+        : <CounterView startCounter={startCounter}
+                       stopCounter={stopCounter}
+                       counter={counter}
+                       editCounter={editCounter}
+                       incCounter={incCounter}
+                       resetCounter={resetCounter}
+                       isConfetti={isConfetti}
+                       confettiIsWorked={confettiIsWorked}
         />
 
     return (

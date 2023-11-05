@@ -1,7 +1,7 @@
 import React from "react"
-import {CounterNumber} from "../CounterNumber/CounterNumber"
-import {Button} from "../Button/Button"
-import {Text} from "../Text/Text"
+import {CounterNumber} from "../../components/CounterNumber/CounterNumber"
+import {Button} from "../../components/Button/Button"
+import {Text} from "../../components/Text/Text"
 
 type PropsType = {
     startCounter: number
@@ -14,7 +14,7 @@ type PropsType = {
     confettiIsWorked: () => void
 }
 
-export const Counter: React.FC<PropsType> = ({
+export const CounterView: React.FC<PropsType> = ({
                                                  startCounter,
                                                  stopCounter,
                                                  counter,
