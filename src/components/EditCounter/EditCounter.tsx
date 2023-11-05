@@ -1,7 +1,10 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import {Button} from "../Button/Button"
 import {Input} from "../Input/Input"
 import styles from "./EditCounter.module.css"
+import useSound from "use-sound"
+import errorSound from "../../assets/sounds/error.mp3"
+import {SoundContext} from "../../contexts/SoundContext"
 
 type PropsType = {
     setStartCounter: (value: number) => void
@@ -28,10 +31,21 @@ export const EditCounter: React.FC<PropsType> = ({
 
     const [errorMessage, setErrorMessage] = useState<string>("")
 
+    const context = useContext(SoundContext)
+    const [playErrorSound] = useSound(errorSound, {volume: context.volume, soundEnabled: context.isSound });
+
     useEffect(() => {
         setErrorMessage("")
-        if (startValue === stopValue) setErrorMessage("Values cannot be equal to!")
-        if (startValue > stopValue) setErrorMessage("Start value cannot be greater than end value!")
+
+        if (startValue === stopValue) {
+            playErrorSound()
+            setErrorMessage("Values cannot be equal to!")
+        }
+
+        if (startValue > stopValue) {
+            playErrorSound()
+            setErrorMessage("Start value cannot be greater than end value!")
+        }
     }, [startValue, stopValue])
 
     const replaceStartValue = (value: number) => setStartValue(value)

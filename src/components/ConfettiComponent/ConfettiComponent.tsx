@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import Confetti from "react-dom-confetti"
 import useSound from "use-sound"
 import applause from '../../assets/sounds/applause.mp3';
-import firecracker from '../../assets/sounds/firecracker.mp3';
+import fireCracker from '../../assets/sounds/fireCracker.mp3';
+import {SoundContext} from "../../contexts/SoundContext"
 
 type PropsType = {
     value: number
@@ -14,8 +15,10 @@ type PropsType = {
 export const ConfettiComponent: React.FC<PropsType> = ({value, stopCounter, isConfetti, confettiIsWorked}) => {
     const [isConfettiActive, setConfettiActive] = useState(false)
 
-    const [playFirecracker] = useSound(firecracker, {volume: 0.1});
-    const [playApplause] = useSound(applause, {volume: 0.1});
+    const context = useContext(SoundContext)
+
+    const [playFirecracker] = useSound(fireCracker, {volume: context.volume, soundEnabled: context.isSound});
+    const [playApplause] = useSound(applause, {volume: context.volume, soundEnabled: context.isSound});
 
     useEffect(() => {
         if (value === stopCounter && !isConfetti) {

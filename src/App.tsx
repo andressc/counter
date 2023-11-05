@@ -3,18 +3,21 @@ import "./App.css"
 import {EditCounter} from "./components/EditCounter/EditCounter"
 import {Counter} from "./components/Counter/Counter"
 import {
-    COUNTER_STORAGE_KEY, DEFAULT_IS_CONFETTI,
+    COUNTER_STORAGE_KEY, DEFAULT_IS_CONFETTI, DEFAULT_IS_SOUND, DEFAULT_SOUND_VOLUME,
     DEFAULT_START_COUNTER,
-    DEFAULT_STOP_COUNTER, IS_CONFETTI_STORAGE_KEY,
+    DEFAULT_STOP_COUNTER, IS_CONFETTI_STORAGE_KEY, IS_SOUND_STORAGE_KEY,
     START_COUNTER_STORAGE_KEY,
-    STOP_COUNTER_STORAGE_KEY
+    STOP_COUNTER_STORAGE_KEY,
 } from "./constants"
+import {IsSound} from "./components/IsSound/IsSound"
+import { SoundContext } from "./contexts/SoundContext"
 
 type localStorageKeyType =
     typeof START_COUNTER_STORAGE_KEY
     | typeof STOP_COUNTER_STORAGE_KEY
     | typeof COUNTER_STORAGE_KEY
     | typeof IS_CONFETTI_STORAGE_KEY
+    | typeof IS_SOUND_STORAGE_KEY
 
 const createStateNumber = (keyType: localStorageKeyType, defaultValue: number): number =>
     localStorage.getItem(keyType) == null ? defaultValue : (JSON.parse(localStorage.getItem(keyType)!))
@@ -40,6 +43,10 @@ function App() {
         createStateBoolean(IS_CONFETTI_STORAGE_KEY, DEFAULT_IS_CONFETTI)
     )
 
+    const [isSound, setIsSound] = useState<boolean>(
+        createStateBoolean(IS_SOUND_STORAGE_KEY, DEFAULT_IS_SOUND)
+    )
+
     const [editMode, setEditMode] = useState<boolean>(false)
 
     useEffect(() => {
@@ -51,10 +58,17 @@ function App() {
     }, [isConfetti])
 
     useEffect(() => {
+        localStorage.setItem(IS_SOUND_STORAGE_KEY, JSON.stringify(isSound))
+    }, [isSound])
+
+    useEffect(() => {
         localStorage.setItem(START_COUNTER_STORAGE_KEY, JSON.stringify(startCounter))
         localStorage.setItem(STOP_COUNTER_STORAGE_KEY, JSON.stringify(stopCounter))
     }, [startCounter, stopCounter])
 
+    const setSound = () => {
+        setIsSound(!isSound)
+    }
 
     const confettiIsWorked = () => setIsConfetti(true)
     const confettiIsDontWorked = () => setIsConfetti(false)
@@ -94,9 +108,12 @@ function App() {
 
 
     return (
-        <div className="App">
-            {isEdit}
-        </div>
+        <SoundContext.Provider value={{volume: DEFAULT_SOUND_VOLUME, isSound: isSound}}>
+            <IsSound setSound={setSound}/>
+            <div className="App">
+                {isEdit}
+            </div>
+        </SoundContext.Provider>
     )
 }
 

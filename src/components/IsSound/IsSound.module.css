@@ -1,0 +1,14 @@
+.wrapper {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+img {
+    cursor: pointer;
+}
+
+
+.off {
+    opacity: 0.3;
+}
