@@ -5,6 +5,7 @@ import styles from "./EditCounter.module.css"
 import useSound from "use-sound"
 import errorSound from "../../assets/sounds/error.mp3"
 import {SoundContext} from "../../contexts/SoundContext"
+import {ErrorMessage} from "../ErrorMessage/ErrorMessage"
 
 type PropsType = {
     setStartCounter: (value: number) => void
@@ -70,11 +71,9 @@ export const EditCounter: React.FC<PropsType> = ({
             <div className={styles.inputWrapper}>
                 <Input value={startValue} title="Set start vaule" setValue={replaceStartValue}/>
                 <Input value={stopValue} title="Set end vaule" setValue={replaceStopValue}/>
-                <div className={styles.errorMessageWrapper}>
-                    <span className={styles.errorMessage}>{errorMessage && errorMessage}</span>
-                </div>
+                <ErrorMessage errorMessage={errorMessage}/>
             </div>
-            <div className="buttons">
+            <div className="buttonWrapper">
                 <Button title="set" callBack={updateStartStopCounter} disabled={setDisabled}/>
                 <Button title="close" callBack={closeSettings}/>
             </div>

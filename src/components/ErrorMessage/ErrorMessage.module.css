@@ -1,0 +1,10 @@
+.errorMessageWrapper {
+    height: 20px;
+}
+
+.errorMessage {
+    color: red;
+    transition: 0.2s;
+    font-size: 13px;
+    transform: scale(1.5);
+}

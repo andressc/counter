@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from "react"
 import styles from "./Input.module.css"
 import {Button} from "../Button/Button"
+import {Text} from "../Text/Text"
 
 
 type PropsType = {
@@ -9,12 +10,14 @@ type PropsType = {
     setValue: (value: number) => void
 }
 
+const stylesButton = {width: "50px"}
+
 export const Input: React.FC<PropsType> = ({value, title, setValue}) => {
 
     const [inputValue, setInputValue] = useState<number>((value))
 
     useEffect(() => {
-            setValue(inputValue)
+        setValue(inputValue)
     }, [inputValue])
 
     const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +32,11 @@ export const Input: React.FC<PropsType> = ({value, title, setValue}) => {
 
     return (
         <div className={styles.container}>
-            <span>{title}</span>
+            <Text text={title}/>
             <div className={styles.wrapper}>
                 <input type="text" value={inputValue} onChange={onchangeHandler} className={styles.input}/>
-                <Button title="+" callBack={increment} style={{width: "50px"}}/>
-                <Button title="-" callBack={decrement} style={{width: "50px"}} disabled={inputValue === 0}/>
+                <Button title="+" callBack={increment} style={stylesButton}/>
+                <Button title="-" callBack={decrement} style={stylesButton} disabled={inputValue === 0}/>
             </div>
         </div>
     )

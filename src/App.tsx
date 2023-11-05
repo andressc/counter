@@ -12,6 +12,7 @@ import {
 import {IsSound} from "./components/IsSound/IsSound"
 import {SoundContext} from "./contexts/SoundContext"
 import {Button} from "./components/Button/Button"
+import {Text} from "./components/Text/Text"
 
 type localStorageKeyType =
     typeof START_COUNTER_STORAGE_KEY
@@ -91,13 +92,12 @@ function App() {
     const isEditMode = () => setEditMode(false)
 
     const selectSound: JSX.Element = <div className="App">
-        <span>Turn on the sound?</span>
-        <div className="buttons">
+        <Text text="Turn on the sound?"/>
+        <div className="buttonWrapper">
             <Button title="yes" callBack={soundDialogYes}/>
             <Button title="no" callBack={soundDialogNo}/>
         </div>
     </div>
-
 
     const isEdit: JSX.Element = editMode
         ? <EditCounter setStartCounter={setStartCounter}
@@ -117,7 +117,6 @@ function App() {
                    isConfetti={isConfetti}
                    confettiIsWorked={confettiIsWorked}
         />
-
 
     return (
         <SoundContext.Provider value={{volume: DEFAULT_SOUND_VOLUME, isSound: isSound}}>

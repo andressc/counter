@@ -1,6 +1,7 @@
 import React from "react"
 import {CounterNumber} from "../CounterNumber/CounterNumber"
 import {Button} from "../Button/Button"
+import {Text} from "../Text/Text"
 
 type PropsType = {
     startCounter: number
@@ -31,12 +32,12 @@ export const Counter: React.FC<PropsType> = ({
                            isConfetti={isConfetti}
                            confettiIsWorked={confettiIsWorked}
             />
-            <div className="buttons">
+            <div className="buttonWrapper">
                 <Button title="inc" callBack={incCounter} disabled={counter >= stopCounter}/>
                 <Button title="reset" callBack={resetCounter} disabled={counter === startCounter}/>
                 <Button title="set" callBack={editCounter}/>
             </div>
-            <span>Counter from {startCounter} to {stopCounter}</span>
+            <Text text={`Counter from ${startCounter} to ${stopCounter}`}/>
         </>
     )
 }
