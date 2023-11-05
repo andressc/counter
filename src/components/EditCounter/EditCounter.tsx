@@ -29,10 +29,9 @@ export const EditCounter: React.FC<PropsType> = ({
     const [errorMessage, setErrorMessage] = useState<string>("")
 
     useEffect(() => {
+        setErrorMessage("")
         if (startValue === stopValue) setErrorMessage("Values cannot be equal to!")
         if (startValue > stopValue) setErrorMessage("Start value cannot be greater than end value!")
-        if (startValue !== stopValue && startValue < stopValue) setErrorMessage("")
-
     }, [startValue, stopValue])
 
     const replaceStartValue = (value: number) => setStartValue(value)
