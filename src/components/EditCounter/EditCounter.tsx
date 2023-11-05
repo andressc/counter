@@ -8,19 +8,19 @@ type PropsType = {
     setStopCounter: (value: number) => void
     setCounter: (value: number) => void
     isEditMode: () => void
+    confettiIsDontWorked: () => void
     startCounter: number
     stopCounter: number
-    counter: number
 }
 
 export const EditCounter: React.FC<PropsType> = ({
                                                      setStartCounter,
                                                      setStopCounter,
+                                                     confettiIsDontWorked,
                                                      startCounter,
                                                      stopCounter,
                                                      isEditMode,
                                                      setCounter,
-                                                     counter
                                                  }) => {
 
     const [startValue, setStartValue] = useState<number>(startCounter)
@@ -43,12 +43,10 @@ export const EditCounter: React.FC<PropsType> = ({
         setCounter(startValue)
         setStartCounter(startValue)
         setStopCounter(stopValue)
+        confettiIsDontWorked()
         isEditMode()
     }
     const closeSettings = () => {
-        if (counter === stopValue) {
-            setCounter(startValue)
-        }
         isEditMode()
     }
 
