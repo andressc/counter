@@ -5,19 +5,19 @@ import {Counter} from "./components/Counter/Counter"
 import {
     COUNTER_STORAGE_KEY, DEFAULT_IS_CONFETTI, DEFAULT_IS_SOUND, DEFAULT_SOUND_VOLUME,
     DEFAULT_START_COUNTER,
-    DEFAULT_STOP_COUNTER, IS_CONFETTI_STORAGE_KEY, IS_SOUND_STORAGE_KEY,
+    DEFAULT_STOP_COUNTER, IS_CONFETTI_STORAGE_KEY,
     START_COUNTER_STORAGE_KEY,
     STOP_COUNTER_STORAGE_KEY,
 } from "./constants"
 import {IsSound} from "./components/IsSound/IsSound"
-import { SoundContext } from "./contexts/SoundContext"
+import {SoundContext} from "./contexts/SoundContext"
+import {Button} from "./components/Button/Button"
 
 type localStorageKeyType =
     typeof START_COUNTER_STORAGE_KEY
     | typeof STOP_COUNTER_STORAGE_KEY
     | typeof COUNTER_STORAGE_KEY
     | typeof IS_CONFETTI_STORAGE_KEY
-    | typeof IS_SOUND_STORAGE_KEY
 
 const createStateNumber = (keyType: localStorageKeyType, defaultValue: number): number =>
     localStorage.getItem(keyType) == null ? defaultValue : (JSON.parse(localStorage.getItem(keyType)!))
@@ -43,10 +43,9 @@ function App() {
         createStateBoolean(IS_CONFETTI_STORAGE_KEY, DEFAULT_IS_CONFETTI)
     )
 
-    const [isSound, setIsSound] = useState<boolean>(
-        createStateBoolean(IS_SOUND_STORAGE_KEY, DEFAULT_IS_SOUND)
-    )
+    const [isSound, setIsSound] = useState<boolean>(DEFAULT_IS_SOUND)
 
+    const [soundDialog, setSoundDialog] = useState<boolean>(true)
     const [editMode, setEditMode] = useState<boolean>(false)
 
     useEffect(() => {
@@ -58,16 +57,21 @@ function App() {
     }, [isConfetti])
 
     useEffect(() => {
-        localStorage.setItem(IS_SOUND_STORAGE_KEY, JSON.stringify(isSound))
-    }, [isSound])
-
-    useEffect(() => {
         localStorage.setItem(START_COUNTER_STORAGE_KEY, JSON.stringify(startCounter))
         localStorage.setItem(STOP_COUNTER_STORAGE_KEY, JSON.stringify(stopCounter))
     }, [startCounter, stopCounter])
 
     const setSound = () => {
         setIsSound(!isSound)
+    }
+
+    const soundDialogYes = () => {
+        setSoundDialog(false)
+        setIsSound(true)
+    }
+    const soundDialogNo = () => {
+        setSoundDialog(false)
+        setIsSound(false)
     }
 
     const confettiIsWorked = () => setIsConfetti(true)
@@ -85,6 +89,14 @@ function App() {
     const editCounter = () => setEditMode(true)
 
     const isEditMode = () => setEditMode(false)
+
+    const selectSound: JSX.Element = <div className="App">
+        <span>Turn on the sound?</span>
+        <div className="buttons">
+            <Button title="yes" callBack={soundDialogYes}/>
+            <Button title="no" callBack={soundDialogNo}/>
+        </div>
+    </div>
 
 
     const isEdit: JSX.Element = editMode
@@ -109,9 +121,9 @@ function App() {
 
     return (
         <SoundContext.Provider value={{volume: DEFAULT_SOUND_VOLUME, isSound: isSound}}>
-            <IsSound setSound={setSound}/>
+            {!soundDialog && <IsSound setSound={setSound}/>}
             <div className="App">
-                {isEdit}
+                {soundDialog ? selectSound : isEdit}
             </div>
         </SoundContext.Provider>
     )

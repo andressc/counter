@@ -37,6 +37,7 @@ export const Counter: React.FC<PropsType> = ({
                 <Button title="reset" callBack={resetCounter} disabled={counter === startCounter}/>
                 <Button title="set" callBack={editCounter}/>
             </div>
+            <span>Counter from {startCounter} to {stopCounter}</span>
         </>
     )
 }

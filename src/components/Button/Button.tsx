@@ -13,7 +13,7 @@ export const Button: React.FC<PropsType> = ({title, callBack, disabled, ...restP
 
     const context = useContext(SoundContext)
 
-    const [playButtonPress] = useSound(buttonPress, {volume: context.volume, soundEnabled: context.isSound });
+    const [playButtonPress] = useSound(buttonPress, {volume: context.volume, soundEnabled: context.isSound})
 
     const onClickHandler = () => {
         playButtonPress()
