@@ -1,7 +1,7 @@
 import React from "react"
-import {CounterNumber} from "../../components/CounterNumber/CounterNumber"
-import {Button} from "../../components/Button/Button"
-import {Text} from "../../components/Text/Text"
+import {CounterNumber} from "../../../components/CounterNumber/CounterNumber"
+import {Button} from "../../../components/Button/Button"
+import {Text} from "../../../components/Text/Text"
 
 type PropsType = {
     startCounter: number
