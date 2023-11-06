@@ -47,7 +47,7 @@ export const EditCounterView: React.FC<PropsType> = ({
             playErrorSound()
             setErrorMessage("Start value cannot be greater than end value!")
         }
-    }, [startValue, stopValue])
+    }, [startValue, stopValue, playErrorSound])
 
     const replaceStartValue = (value: number) => setStartValue(value)
 

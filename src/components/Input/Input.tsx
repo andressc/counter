@@ -18,7 +18,7 @@ export const Input: React.FC<PropsType> = ({value, title, setValue}) => {
 
     useEffect(() => {
         setValue(inputValue)
-    }, [inputValue])
+    }, [inputValue, setValue])
 
     const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(+e.currentTarget.value.replace(/\D/g, ""))

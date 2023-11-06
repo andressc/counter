@@ -11,7 +11,6 @@ import {
 } from "./constants/constants"
 import {IsSound} from "./components/IsSound/IsSound"
 import {SoundContext} from "./contexts/SoundContext"
-import {SoundView} from "./views/SoundView/SoundView"
 
 type localStorageKeyType =
     typeof START_COUNTER_STORAGE_KEY
@@ -45,7 +44,6 @@ function App() {
 
     const [isSound, setIsSound] = useState<boolean>(DEFAULT_IS_SOUND)
 
-    const [soundDialog, setSoundDialog] = useState<boolean>(true)
     const [editMode, setEditMode] = useState<boolean>(false)
 
     useEffect(() => {
@@ -65,15 +63,6 @@ function App() {
         setIsSound(!isSound)
     }
 
-    const soundDialogYes = () => {
-        setSoundDialog(false)
-        setIsSound(true)
-    }
-    const soundDialogNo = () => {
-        setSoundDialog(false)
-        setIsSound(false)
-    }
-
     const confettiIsWorked = () => setIsConfetti(true)
     const confettiIsDontWorked = () => setIsConfetti(false)
 
@@ -89,11 +78,6 @@ function App() {
     const editCounter = () => setEditMode(true)
 
     const isEditMode = () => setEditMode(false)
-
-    const selectSound: JSX.Element = <SoundView
-        soundDialogNo={soundDialogNo}
-        soundDialogYes={soundDialogYes}
-    />
 
     const isEdit: JSX.Element = editMode
         ? <EditCounterView setStartCounter={setStartCounter}
@@ -116,9 +100,9 @@ function App() {
 
     return (
         <SoundContext.Provider value={{volume: DEFAULT_SOUND_VOLUME, isSound: isSound}}>
-            {!soundDialog && <IsSound setSound={setSound}/>}
+            <IsSound setSound={setSound}/>
             <div className="App">
-                {soundDialog ? selectSound : isEdit}
+                {isEdit}
             </div>
         </SoundContext.Provider>
     )
