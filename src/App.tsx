@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "./App.css"
 import {SoundContext} from "./contexts/SoundContext"
-import {Counter} from "./pages/Counter/Counter"
+import {Counter} from "./views/Counter"
 import {DEFAULT_IS_SOUND, DEFAULT_SOUND_VOLUME} from "./constants/constants"
 import {IsSound} from "./components/IsSound/IsSound"
 

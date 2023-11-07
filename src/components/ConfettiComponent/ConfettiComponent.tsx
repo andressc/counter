@@ -6,13 +6,11 @@ import fireCracker from '../../assets/sounds/fireCracker.mp3';
 import {SoundContext} from "../../contexts/SoundContext"
 
 type PropsType = {
-    value: number
-    stopCounter: number
     isConfetti: boolean
     confettiIsWorked: () => void
 }
 
-export const ConfettiComponent: React.FC<PropsType> = ({value, stopCounter, isConfetti, confettiIsWorked}) => {
+export const ConfettiComponent: React.FC<PropsType> = ({isConfetti, confettiIsWorked}) => {
     const [isConfettiActive, setConfettiActive] = useState(false)
 
     const context = useContext(SoundContext)
@@ -21,7 +19,7 @@ export const ConfettiComponent: React.FC<PropsType> = ({value, stopCounter, isCo
     const [playApplause] = useSound(applause, {volume: context.volume, soundEnabled: context.isSound});
 
     useEffect(() => {
-        if (value === stopCounter && !isConfetti) {
+        if (isConfetti) {
 
             confettiIsWorked()
 
@@ -34,7 +32,7 @@ export const ConfettiComponent: React.FC<PropsType> = ({value, stopCounter, isCo
                 setConfettiActive(false)
             }, 2000)
         }
-    }, [value])
+    }, [isConfetti])
 
     const config = {
         angle: 90,

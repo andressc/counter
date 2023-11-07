@@ -5,20 +5,10 @@ import {
     DEFAULT_STOP_COUNTER, IS_CONFETTI_STORAGE_KEY,
     START_COUNTER_STORAGE_KEY,
     STOP_COUNTER_STORAGE_KEY
-} from "../../constants/constants"
+} from "../constants/constants"
 import {EditCounterView} from "./EditCounterView/EditCounterView"
 import {CounterView} from "./CounterView/CounterView"
-
-type localStorageKeyType =
-    typeof START_COUNTER_STORAGE_KEY
-    | typeof STOP_COUNTER_STORAGE_KEY
-    | typeof COUNTER_STORAGE_KEY
-    | typeof IS_CONFETTI_STORAGE_KEY
-const createStateNumber = (keyType: localStorageKeyType, defaultValue: number): number =>
-    localStorage.getItem(keyType) == null ? defaultValue : (JSON.parse(localStorage.getItem(keyType)!))
-
-const createStateBoolean = (keyType: localStorageKeyType, defaultValue: boolean): boolean =>
-    localStorage.getItem(keyType) == null ? defaultValue : (JSON.parse(localStorage.getItem(keyType)!))
+import {createStateBoolean, createStateNumber} from "../helpers/helpers"
 
 export const Counter: React.FC = () => {
     const [startCounter, setStartCounter] = useState<number>(
@@ -33,7 +23,7 @@ export const Counter: React.FC = () => {
         createStateNumber(COUNTER_STORAGE_KEY, DEFAULT_START_COUNTER)
     )
 
-    const [isConfetti, setIsConfetti] = useState<boolean>(
+    const [confettiWorked, setConfettiWorked] = useState<boolean>(
         createStateBoolean(IS_CONFETTI_STORAGE_KEY, DEFAULT_IS_CONFETTI)
     )
 
@@ -44,18 +34,25 @@ export const Counter: React.FC = () => {
     }, [counter])
 
     useEffect(() => {
-        localStorage.setItem(IS_CONFETTI_STORAGE_KEY, JSON.stringify(isConfetti))
-    }, [isConfetti])
+        localStorage.setItem(IS_CONFETTI_STORAGE_KEY, JSON.stringify(confettiWorked))
+    }, [confettiWorked])
 
     useEffect(() => {
         localStorage.setItem(START_COUNTER_STORAGE_KEY, JSON.stringify(startCounter))
         localStorage.setItem(STOP_COUNTER_STORAGE_KEY, JSON.stringify(stopCounter))
     }, [startCounter, stopCounter])
 
-    const confettiIsWorked = () => setIsConfetti(true)
-    const confettiIsDontWorked = () => setIsConfetti(false)
+    const confettiIsWorked = () => setConfettiWorked(true)
+    const confettiIsDontWorked = () => setConfettiWorked(false)
 
     const incCounter = () => counter < stopCounter && setCounter(counter => counter + 1)
+
+    const resetCounter = () => {
+        if (counter > startCounter) {
+            setCounter(startCounter)
+            confettiIsDontWorked()
+        }
+    }
 
     /*const [running, setRunning] = useState(false)
     const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
@@ -84,13 +81,6 @@ export const Counter: React.FC = () => {
         setRunning(true)
     }*/
 
-    const resetCounter = () => {
-        if (counter > startCounter) {
-            setCounter(startCounter)
-            confettiIsDontWorked()
-        }
-    }
-
     const editCounter = () => setEditMode(true)
 
     const isEditMode = () => setEditMode(false)
@@ -110,7 +100,7 @@ export const Counter: React.FC = () => {
                        editCounter={editCounter}
                        incCounter={incCounter}
                        resetCounter={resetCounter}
-                       isConfetti={isConfetti}
+                       isConfetti={confettiWorked}
                        confettiIsWorked={confettiIsWorked}
         />
 

@@ -1,18 +1,18 @@
 import React, {useContext, useEffect, useState} from "react"
-import {Button} from "../../../components/Button/Button"
-import {Input} from "../../../components/Input/Input"
+import {Button} from "../../components/Button/Button"
+import {Input} from "../../components/Input/Input"
 import styles from "./EditCounterView.module.css"
 import useSound from "use-sound"
-import errorSound from "../../../assets/sounds/error.mp3"
-import {SoundContext} from "../../../contexts/SoundContext"
-import {ErrorMessage} from "../../../components/ErrorMessage/ErrorMessage"
+import errorSound from "../../assets/sounds/error.mp3"
+import {SoundContext} from "../../contexts/SoundContext"
+import {ErrorMessage} from "../../components/ErrorMessage/ErrorMessage"
 
 type PropsType = {
     setStartCounter: (value: number) => void
     setStopCounter: (value: number) => void
     setCounter: (value: number) => void
     isEditMode: () => void
-    confettiIsDontWorked: () => void
+    confettiIsDontWorked?: () => void
     startCounter: number
     stopCounter: number
 }
@@ -20,7 +20,7 @@ type PropsType = {
 export const EditCounterView: React.FC<PropsType> = ({
                                                      setStartCounter,
                                                      setStopCounter,
-                                                     confettiIsDontWorked,
+                                                     confettiIsDontWorked = () => {},
                                                      startCounter,
                                                      stopCounter,
                                                      isEditMode,
@@ -47,7 +47,7 @@ export const EditCounterView: React.FC<PropsType> = ({
             playErrorSound()
             setErrorMessage("Start value cannot be greater than end value!")
         }
-    }, [startValue, stopValue, playErrorSound])
+    }, [startValue, stopValue])
 
     const replaceStartValue = (value: number) => setStartValue(value)
 
@@ -64,7 +64,7 @@ export const EditCounterView: React.FC<PropsType> = ({
         isEditMode()
     }
 
-    const setDisabled = startValue === stopValue || startValue > stopValue
+    const conditionSet = startValue === stopValue || startValue > stopValue
 
     return (
         <div className={styles.wrapper}>
@@ -74,7 +74,7 @@ export const EditCounterView: React.FC<PropsType> = ({
                 <ErrorMessage errorMessage={errorMessage}/>
             </div>
             <div className="buttonWrapper">
-                <Button title="set" callBack={updateStartStopCounter} disabled={setDisabled}/>
+                <Button title="set" callBack={updateStartStopCounter} disabled={conditionSet}/>
                 <Button title="close" callBack={closeSettings}/>
             </div>
         </div>
