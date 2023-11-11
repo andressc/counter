@@ -30,7 +30,7 @@ export const ConfettiComponent: React.FC<PropsType> = ({isConfetti, confettiIsWo
 
             setTimeout(() => {
                 setConfettiActive(false)
-            }, 2000)
+            }, 100)
         }
     }, [isConfetti])
 

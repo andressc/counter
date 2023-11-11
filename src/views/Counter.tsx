@@ -82,7 +82,6 @@ export const Counter: React.FC = () => {
     }*/
 
     const editCounter = () => setEditMode(true)
-
     const isEditMode = () => setEditMode(false)
 
     const isEdit: JSX.Element = editMode
@@ -105,8 +104,8 @@ export const Counter: React.FC = () => {
         />
 
     return (
-            <div className="App">
-                {isEdit}
-            </div>
+        <div className="App">
+            {isEdit}
+        </div>
     )
 }
