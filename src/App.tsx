@@ -17,10 +17,10 @@ function App() {
 
     return (
         <Provider store={store}>
-            <SoundContext.Provider value={{volume: DEFAULT_SOUND_VOLUME, isSound: isSound}}>
-                <IsSound setSound={setSound}/>
-                <Counter/>
-            </SoundContext.Provider>
+        <SoundContext.Provider value={{volume: DEFAULT_SOUND_VOLUME, isSound: isSound}}>
+            <IsSound setSound={setSound}/>
+            <Counter/>
+        </SoundContext.Provider>
         </Provider>
     )
 }

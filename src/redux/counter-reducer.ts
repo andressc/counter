@@ -57,12 +57,3 @@ export const setEditModeAC = (isEdit: boolean) =>
 type SetConfettiType = ReturnType<typeof setConfettiAC>
 export const setConfettiAC = (isConfetti: boolean) =>
     ({type: "SET-CONFETTI", payload: {isConfetti}} as const)
-
-
-/*export const removeTaskTC = (todoListId: string, taskId: string): AppThunk => dispatch => {
-
-    tasksApi.deleteTask(todoListId, taskId)
-        .then(res => {
-            if (res.data.resultCode === 0) dispatch(removeTaskAC(todoListId, taskId))
-        })
-}*/

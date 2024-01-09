@@ -9,11 +9,12 @@ import {ErrorMessage} from "../../components/ErrorMessage/ErrorMessage"
 import {useDispatch, useSelector} from "react-redux"
 import {CounterType, editStartEndAC, resetCounterAC, setConfettiAC, setEditModeAC} from "../../redux/counter-reducer"
 import {getCounter} from "../../selectors/counter-selector"
+import {AppRootState} from "../../redux/store"
 
 export const EditCounterView: React.FC = () => {
 
     const dispatch = useDispatch()
-    const counter: CounterType = useSelector(getCounter)
+    const counter: CounterType = useSelector<AppRootState, CounterType>(getCounter)
 
     const [startValue, setStartValue] = useState<number>(counter.start)
     const [stopValue, setStopValue] = useState<number>(counter.end)

@@ -12,12 +12,13 @@ import {
     setEditModeAC
 } from "../../redux/counter-reducer"
 import {getCounter} from "../../selectors/counter-selector"
+import {AppRootState} from "../../redux/store"
 
 
 export const CounterView: React.FC = () => {
 
     const dispatch = useDispatch()
-    const counter: CounterType = useSelector(getCounter)
+    const counter: CounterType = useSelector<AppRootState, CounterType>(getCounter)
 
     const conditionConfetti = counter.currentValue === counter.end && !counter.isConfetti
     const conditionCounterNumber = counter.end === counter.currentValue
