@@ -1,4 +1,4 @@
-import React, {ButtonHTMLAttributes, DetailedHTMLProps, JSX, useContext} from "react"
+import React, {ButtonHTMLAttributes, DetailedHTMLProps, FC, JSX, useContext} from "react"
 import styles from "./Button.module.css"
 import useSound from "use-sound"
 import buttonPress from "../../assets/sounds/buttonPress.mp3"
@@ -9,7 +9,7 @@ type PropsType = {
     callBack: () => void
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-export const Button: React.FC<PropsType> = ({title, callBack, disabled, ...restProps}): JSX.Element => {
+export const Button: FC<PropsType> = ({title, callBack, disabled, ...restProps}): JSX.Element => {
 
     const context = useContext(SoundContext)
 

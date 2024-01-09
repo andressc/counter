@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {FC, useContext, useEffect, useState} from "react"
 import Confetti from "react-dom-confetti"
 import useSound from "use-sound"
 import applause from '../../assets/sounds/applause.mp3';
@@ -10,7 +10,7 @@ type PropsType = {
     confettiIsWorked: () => void
 }
 
-export const ConfettiComponent: React.FC<PropsType> = ({isConfetti, confettiIsWorked}) => {
+export const ConfettiComponent: FC<PropsType> = ({isConfetti, confettiIsWorked}) => {
     const [isConfettiActive, setConfettiActive] = useState(false)
 
     const context = useContext(SoundContext)

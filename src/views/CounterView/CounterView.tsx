@@ -1,4 +1,4 @@
-import React from "react"
+import React, {FC} from "react"
 import {CounterNumber} from "../../components/CounterNumber/CounterNumber"
 import {Button} from "../../components/Button/Button"
 import {Text} from "../../components/Text/Text"
@@ -15,7 +15,7 @@ import {getCounter} from "../../selectors/counter-selector"
 import {AppRootState} from "../../redux/store"
 
 
-export const CounterView: React.FC = () => {
+export const CounterView: FC = () => {
 
     const dispatch = useDispatch()
     const counter: CounterType = useSelector<AppRootState, CounterType>(getCounter)

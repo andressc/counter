@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {FC, useContext, useEffect, useState} from "react"
 import {Button} from "../../components/Button/Button"
 import {Input} from "../../components/Input/Input"
 import styles from "./EditCounterView.module.css"
@@ -11,7 +11,7 @@ import {CounterType, editStartEndAC, resetCounterAC, setConfettiAC, setEditModeA
 import {getCounter} from "../../selectors/counter-selector"
 import {AppRootState} from "../../redux/store"
 
-export const EditCounterView: React.FC = () => {
+export const EditCounterView: FC = () => {
 
     const dispatch = useDispatch()
     const counter: CounterType = useSelector<AppRootState, CounterType>(getCounter)

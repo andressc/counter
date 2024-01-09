@@ -1,9 +1,9 @@
-import React from "react"
+import React, {FC} from "react"
 
 type PropsType = {
     text: string
 }
-export const Text: React.FC<PropsType> = ({text}) => {
+export const Text: FC<PropsType> = ({text}) => {
     return (
         <span>{text}</span>
     )

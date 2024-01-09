@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react"
+import React, {ChangeEvent, FC, useEffect, useState} from "react"
 import styles from "./Input.module.css"
 import {Button} from "../Button/Button"
 import {Text} from "../Text/Text"
@@ -12,7 +12,7 @@ type PropsType = {
 
 const stylesButton = {width: "50px"}
 
-export const Input: React.FC<PropsType> = ({value, title, setValue}) => {
+export const Input: FC<PropsType> = ({value, title, setValue}) => {
 
     const [inputValue, setInputValue] = useState<number>((value))
 
