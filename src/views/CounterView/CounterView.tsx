@@ -3,44 +3,56 @@ import {CounterNumber} from "../../components/CounterNumber/CounterNumber"
 import {Button} from "../../components/Button/Button"
 import {Text} from "../../components/Text/Text"
 import {ConfettiComponent} from "../../components/ConfettiComponent/ConfettiComponent"
+import {useDispatch, useSelector} from "react-redux"
+import {
+    addIncrementCounterAC,
+    CounterType,
+    resetCounterAC,
+    setConfettiAC,
+    setEditModeAC
+} from "../../redux/counter-reducer"
+import {getCounter} from "../../selectors/counter-selector"
 
-type PropsType = {
-    startCounter: number
-    stopCounter: number
-    counter: number
-    isConfetti: boolean
-    incCounter: () => void
-    resetCounter: () => void
-    editCounter: () => void
-    confettiIsWorked: () => void
-}
 
-export const CounterView: React.FC<PropsType> = ({
-                                                     startCounter,
-                                                     stopCounter,
-                                                     counter,
-                                                     isConfetti,
-                                                     incCounter,
-                                                     resetCounter,
-                                                     editCounter,
-                                                     confettiIsWorked
-                                                 }) => {
+export const CounterView: React.FC = () => {
 
-    const conditionConfetti = counter === stopCounter && !isConfetti
-    const conditionCounterNumber = stopCounter === counter
-    const conditionInc = counter >= stopCounter
-    const conditionReset = counter === startCounter
+    const dispatch = useDispatch()
+    const counter: CounterType = useSelector(getCounter)
+
+    const conditionConfetti = counter.currentValue === counter.end && !counter.isConfetti
+    const conditionCounterNumber = counter.end === counter.currentValue
+    const conditionInc = counter.currentValue >= counter.end
+    const conditionReset = counter.currentValue === counter.start
+
+    const incCounter = () => {
+        dispatch(addIncrementCounterAC())
+    }
+
+    const resetCounter = () => {
+        if (counter.currentValue > counter.start) {
+            dispatch(resetCounterAC())
+            dispatch(setConfettiAC(false))
+        }
+    }
+
+    const editCounter = () => {
+        dispatch(setEditModeAC(true))
+    }
+
+    const confettiIsWorked = () => {
+        dispatch(dispatch(setConfettiAC(true)))
+    }
 
     return (
         <>
             <ConfettiComponent isConfetti={conditionConfetti} confettiIsWorked={confettiIsWorked}/>
-            <CounterNumber value={counter} isBig={conditionCounterNumber}/>
+            <CounterNumber value={counter.currentValue} isBig={conditionCounterNumber}/>
             <div className="buttonWrapper">
                 <Button title="inc" callBack={incCounter} disabled={conditionInc}/>
                 <Button title="reset" callBack={resetCounter} disabled={conditionReset}/>
                 <Button title="set" callBack={editCounter}/>
             </div>
-            <Text text={`Counter from ${startCounter} to ${stopCounter}`}/>
+            <Text text={`Counter from ${counter.start} to ${counter.end}`}/>
         </>
     )
 }

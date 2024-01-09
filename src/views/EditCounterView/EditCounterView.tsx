@@ -6,34 +6,22 @@ import useSound from "use-sound"
 import errorSound from "../../assets/sounds/error.mp3"
 import {SoundContext} from "../../contexts/SoundContext"
 import {ErrorMessage} from "../../components/ErrorMessage/ErrorMessage"
+import {useDispatch, useSelector} from "react-redux"
+import {CounterType, editStartEndAC, resetCounterAC, setConfettiAC, setEditModeAC} from "../../redux/counter-reducer"
+import {getCounter} from "../../selectors/counter-selector"
 
-type PropsType = {
-    setStartCounter: (value: number) => void
-    setStopCounter: (value: number) => void
-    setCounter: (value: number) => void
-    isEditMode: () => void
-    confettiIsDontWorked?: () => void
-    startCounter: number
-    stopCounter: number
-}
+export const EditCounterView: React.FC = () => {
 
-export const EditCounterView: React.FC<PropsType> = ({
-                                                     setStartCounter,
-                                                     setStopCounter,
-                                                     confettiIsDontWorked = () => {},
-                                                     startCounter,
-                                                     stopCounter,
-                                                     isEditMode,
-                                                     setCounter,
-                                                 }) => {
+    const dispatch = useDispatch()
+    const counter: CounterType = useSelector(getCounter)
 
-    const [startValue, setStartValue] = useState<number>(startCounter)
-    const [stopValue, setStopValue] = useState<number>(stopCounter)
+    const [startValue, setStartValue] = useState<number>(counter.start)
+    const [stopValue, setStopValue] = useState<number>(counter.end)
 
     const [errorMessage, setErrorMessage] = useState<string>("")
 
     const context = useContext(SoundContext)
-    const [playErrorSound] = useSound(errorSound, {volume: context.volume, soundEnabled: context.isSound });
+    const [playErrorSound] = useSound(errorSound, {volume: context.volume, soundEnabled: context.isSound})
 
     useEffect(() => {
         setErrorMessage("")
@@ -54,14 +42,13 @@ export const EditCounterView: React.FC<PropsType> = ({
     const replaceStopValue = (value: number) => setStopValue(value)
 
     const updateStartStopCounter = () => {
-        setCounter(startValue)
-        setStartCounter(startValue)
-        setStopCounter(stopValue)
-        confettiIsDontWorked()
-        isEditMode()
+        dispatch(editStartEndAC(startValue, stopValue))
+        dispatch(resetCounterAC())
+        dispatch(setConfettiAC(false))
+        dispatch(setEditModeAC(false))
     }
     const closeSettings = () => {
-        isEditMode()
+        dispatch(setEditModeAC(false))
     }
 
     const conditionSet = startValue === stopValue || startValue > stopValue
